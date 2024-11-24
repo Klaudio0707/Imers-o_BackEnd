@@ -1,3 +1,5 @@
+import 'dotenv/config';
+import { ObjectId } from "mongodb";
 import conectarAoBanco from "../config/dbConfig.js";
 
 
@@ -19,8 +21,16 @@ export async function createPost(novoPosts){
      // Seleciona a coleção "posts"
      const colecao = db.collection("posts");
      // adiciona um novo documento na coleção
-     return colecao.insertOne(novoPosts)
-
+     return colecao.insertOne(novoPosts);
 
 
 }
+export async function atualizarPost(id, novoPosts){
+    // Seleciona o banco de dados "imersao-metaverso"
+    const db = conexao.db("Imersao-metaverso");
+    // Seleciona a coleção "posts"
+    const colecao = db.collection("posts");
+    const objID = ObjectId.createFromHexString(id); 
+    // adiciona um novo documento na coleção
+    return colecao.updateOne({_id: new ObjectId(objID)}, {$set:novoPosts})
+};
